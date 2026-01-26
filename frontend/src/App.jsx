@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './App.css';
 
 function App() {
   const [streak, setStreak] = useState(0)
@@ -23,7 +24,9 @@ function App() {
     setStreak(streak + 1);
     setClick(true);
     setModalAberto(false);
+    setPaginas("")
   }
+
   function listaPaginas() {
     const marcarData = diaAtual
     const novo = {
@@ -170,8 +173,9 @@ function App() {
             </h2>
 
             <input
-              type="text"
+              type="Number"
               value={paginas}
+              min="1"
               onChange={(e) => setPaginas(e.target.value)}
               placeholder="Ex: 15"
               className="
@@ -183,11 +187,14 @@ function App() {
                 py-2
                 outline-none
                 focus:ring-2
-                focus:ring-purple-500
+                focus:ring-purple-500 
+                no-spinner border rounded p-2              
               "
+               
             />
 
             <button
+            
               onClick={fazTudo}
               className="
                 bg-purple-500
