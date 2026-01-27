@@ -14,6 +14,11 @@ function App() {
   const mediaPaginas = totalPaginas / paginasLidas.length
   const maiorPaginas = Math.max(...paginasLidas)
 
+  const paginasValidas =
+  paginas !== "" &&
+  /^\d+$/.test(paginas) &&
+  parseInt(paginas, 10) > 0
+
 
   function abrirModal() {
     setModalAberto(true);
@@ -176,6 +181,7 @@ function App() {
               type="Number"
               value={paginas}
               min="1"
+              step="1"
               onChange={(e) => setPaginas(e.target.value)}
               placeholder="Ex: 15"
               className="
@@ -196,6 +202,7 @@ function App() {
             <button
             
               onClick={fazTudo}
+              disabled={!paginasValidas}
               className="
                 bg-purple-500
                 hover:bg-purple-400
