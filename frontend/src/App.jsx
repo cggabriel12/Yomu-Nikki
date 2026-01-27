@@ -203,15 +203,17 @@ function App() {
             
               onClick={fazTudo}
               disabled={!paginasValidas}
-              className="
-                bg-purple-500
-                hover:bg-purple-400
-                text-white
+              className={`
                 font-semibold
                 py-2
                 rounded-lg
                 transition
-              "
+                ${
+                  paginasValidas
+                  ? "bg-purple-500 hover:bg-purple-400 text-white"
+                  :"bg-neutral-600 text-gray-400 cursor-not-allowed"
+                }
+              `}
             >
               Salvar ✅
             </button>
