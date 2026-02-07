@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import './App.css';
 
 function App() {
@@ -8,6 +8,8 @@ function App() {
   const [paginas, setPaginas] = useState("")
   const [historico, setHistorico] = useState([])
   const [diaAtual, setDiaAtual] = useState("2026-01-23")
+  const [carregado, setCarregado] = useState(false);
+
 
   const paginasLidas = historico.map(item => item.paginas)
   const totalPaginas = paginasLidas.reduce((acc, num) => acc + num, 0)
@@ -15,9 +17,57 @@ function App() {
   const maiorPaginas = Math.max(...paginasLidas)
 
   const paginasValidas =
-  paginas !== "" &&
-  /^\d+$/.test(paginas) &&
-  parseInt(paginas, 10) > 0
+    paginas !== "" &&
+    /^\d+$/.test(paginas) &&
+    parseInt(paginas, 10) > 0
+  
+    // carregar
+  useEffect(() => {
+  const salvo = localStorage.getItem("leitura-diaria");
+  const hoje = new Date().toISOString().slice(0, 10);
+  if (!salvo) {
+    setCarregado(true);
+    return;
+  }
+
+  const dados = JSON.parse(salvo);
+
+  if (dados.version !== 1) {
+    setCarregado(true);
+    return;
+  }
+
+  setHistorico(dados.registros || []);
+  setStreak(dados.streak || 0);
+  setDiaAtual(dados.diaAtual || hoje);
+
+  setCarregado(true);
+}, []);
+   
+
+//salvar
+useEffect(() => {
+  if (!carregado) return;
+
+  const appData = {
+    version: 1,
+    streak,
+    registros: historico,
+    diaAtual
+  };
+
+  localStorage.setItem(
+    "leitura-diaria",
+    JSON.stringify(appData)
+  );
+}, [streak, historico, diaAtual, carregado]);
+
+
+
+
+
+
+
 
 
   function abrirModal() {
@@ -196,11 +246,11 @@ function App() {
                 focus:ring-purple-500 
                 no-spinner border rounded p-2              
               "
-               
+
             />
 
             <button
-            
+
               onClick={fazTudo}
               disabled={!paginasValidas}
               className={`
@@ -208,10 +258,9 @@ function App() {
                 py-2
                 rounded-lg
                 transition
-                ${
-                  paginasValidas
+                ${paginasValidas
                   ? "bg-purple-500 hover:bg-purple-400 text-white"
-                  :"bg-neutral-600 text-gray-400 cursor-not-allowed"
+                  : "bg-neutral-600 text-gray-400 cursor-not-allowed"
                 }
               `}
             >
