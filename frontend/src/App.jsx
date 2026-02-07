@@ -94,172 +94,174 @@ function App() {
     listaPaginas()
   }
 
-  return (
-    <div className="
+return (
+  <div
+    className="
       bg-neutral-900
       w-full
       min-h-[100dvh]
       flex
       flex-col
-      items-center
       px-4
-      pt-8
-      pb-12
+      pt-6
+      pb-16
+      md:items-center
       md:justify-center
-      md:min-h-screen
-    ">
+    "
+  >
+    <div className="w-full md:max-w-md flex flex-col gap-8">
 
-      <div className="flex flex-col items-center text-center gap-6 w-full md:max-w-md">
-
-        {/* Título */}
-        <h1 className="text-gray-100 text-xl font-medium">
+      {/* HEADER */}
+      <header className="text-center">
+        <h1 className="text-gray-100 text-lg font-medium">
           Leitura Diária
         </h1>
+      </header>
 
-        {/* Streak */}
-        <div className="flex flex-col items-center gap-1">
-          <span className="text-3xl">🔥</span>
-          <span className="text-7xl font-bold text-white">
-            {streak}
-          </span>
-          <span className="text-gray-400 text-sm">
-            dias seguidos
-          </span>
-        </div>
-
-        {/* Mensagem */}
-        <p className="text-gray-300 max-w-xs">
-          {streak === 0
-            ? "Comece sua sequência hoje"
-            : "Leitura marcada! Volte amanhã"}
-        </p>
-
-        {/* Botão principal */}
-        {!clicou && (
+      {/* AÇÃO PRINCIPAL — MOBILE FIRST */}
+      {!clicou && (
+        <div className="order-1 md:order-3 flex justify-center">
           <button
             onClick={abrirModal}
             className="
-              mt-4
               bg-purple-500
               hover:bg-purple-400
               text-white
               font-semibold
-              px-8
-              py-3
+              px-10
+              py-4
               rounded-full
               transition
+              text-base
             "
           >
             Li hoje
           </button>
-        )}
-
-        {/* Estatísticas */}
-        <div className="
-          mt-8
-          grid
-          grid-cols-3
-          gap-4
-          w-full
-        ">
-
-          {/* Card 1 */}
-          <div className="bg-neutral-800 rounded-xl p-4 flex flex-col items-center gap-1">
-            <span className="text-xl">📖</span>
-            <span className="text-2xl font-bold text-white">
-              {totalPaginas}
-            </span>
-            <span className="text-xs text-gray-400">
-              Total
-            </span>
-          </div>
-
-          {/* Card 2 */}
-          <div className="bg-neutral-800 rounded-xl p-4 flex flex-col items-center gap-1">
-            <span className="text-xl">📊</span>
-            <span className="text-2xl font-bold text-white">
-              {!Number.isNaN(mediaPaginas) ? mediaPaginas : "-"}
-            </span>
-            <span className="text-xs text-gray-400">
-              Média
-            </span>
-          </div>
-
-          {/* Card 3 */}
-          <div className="bg-neutral-800 rounded-xl p-4 flex flex-col items-center gap-1">
-            <span className="text-xl">⭐</span>
-            <span className="text-2xl font-bold text-white">
-              {historico.length === 0 ? "-" : maiorPaginas}
-            </span>
-            <span className="text-xs text-gray-400">
-              Melhor dia
-            </span>
-          </div>
-
-        </div>
-
-        <button
-          onClick={avancarDia}
-          className="text-xs text-gray-400 underline mt-4"
-        >
-          ⏭️ Avançar dia (teste)
-        </button>
-
-      </div>
-
-      {/* MODAL */}
-      {modalAberto && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center px-4">
-
-          <div className="bg-neutral-800 rounded-xl p-6 w-full max-w-sm flex flex-col gap-4">
-
-            <h2 className="text-white text-lg font-semibold text-center">
-              Quantas páginas você leu hoje?
-            </h2>
-
-            <input
-              type="Number"
-              value={paginas}
-              min="1"
-              step="1"
-              onChange={(e) => setPaginas(e.target.value)}
-              placeholder="Ex: 15"
-              className="
-                bg-neutral-700
-                text-white
-                placeholder-gray-400
-                rounded-lg
-                px-4
-                py-2
-                outline-none
-                focus:ring-2
-                focus:ring-purple-500
-                no-spinner
-              "
-            />
-
-            <button
-              onClick={fazTudo}
-              disabled={!paginasValidas}
-              className={`
-                font-semibold
-                py-2
-                rounded-lg
-                transition
-                ${paginasValidas
-                  ? "bg-purple-500 hover:bg-purple-400 text-white"
-                  : "bg-neutral-600 text-gray-400 cursor-not-allowed"
-                }
-              `}
-            >
-              Salvar ✅
-            </button>
-
-          </div>
         </div>
       )}
+
+      {/* STREAK */}
+      <section className="order-2 md:order-1 flex flex-col items-center gap-1">
+        <span className="text-3xl">🔥</span>
+        <span className="text-6xl font-bold text-white">
+          {streak}
+        </span>
+        <span className="text-gray-400 text-sm">
+          dias seguidos
+        </span>
+      </section>
+
+      {/* MENSAGEM */}
+      <p className="order-3 md:order-2 text-gray-300 text-center max-w-xs mx-auto">
+        {streak === 0
+          ? "Comece sua sequência hoje"
+          : "Leitura marcada! Volte amanhã"}
+      </p>
+
+      {/* ESTATÍSTICAS */}
+      <section
+        className="
+          order-4
+          mt-4
+          grid
+          grid-cols-2
+          gap-4
+          md:grid-cols-3
+        "
+      >
+        {/* Card 1 */}
+        <div className="bg-neutral-800 rounded-xl p-5 flex flex-col items-center gap-1">
+          <span className="text-xl">📖</span>
+          <span className="text-2xl font-bold text-white">
+            {totalPaginas}
+          </span>
+          <span className="text-xs text-gray-400">
+            Total
+          </span>
+        </div>
+
+        {/* Card 2 */}
+        <div className="bg-neutral-800 rounded-xl p-5 flex flex-col items-center gap-1">
+          <span className="text-xl">📊</span>
+          <span className="text-2xl font-bold text-white">
+            {!Number.isNaN(mediaPaginas) ? mediaPaginas : "-"}
+          </span>
+          <span className="text-xs text-gray-400">
+            Média
+          </span>
+        </div>
+
+        {/* Card 3 */}
+        <div className="bg-neutral-800 rounded-xl p-5 flex flex-col items-center gap-1 md:col-auto col-span-2">
+          <span className="text-xl">⭐</span>
+          <span className="text-2xl font-bold text-white">
+            {historico.length === 0 ? "-" : maiorPaginas}
+          </span>
+          <span className="text-xs text-gray-400">
+            Melhor dia
+          </span>
+        </div>
+      </section>
+
+      {/* TESTE */}
+      <button
+        onClick={avancarDia}
+        className="order-5 text-xs text-gray-500 underline text-center mt-2"
+      >
+        ⏭️ Avançar dia (teste)
+      </button>
     </div>
-  );
+
+    {/* MODAL*/}
+    {modalAberto && (
+      <div className="fixed inset-0 bg-black/60 flex items-center justify-center px-4">
+        <div className="bg-neutral-800 rounded-xl p-6 w-full max-w-sm flex flex-col gap-4">
+          <h2 className="text-white text-lg font-semibold text-center">
+            Quantas páginas você leu hoje?
+          </h2>
+
+          <input
+            type="number"
+            value={paginas}
+            min="1"
+            step="1"
+            onChange={(e) => setPaginas(e.target.value)}
+            placeholder="Ex: 15"
+            className="
+              bg-neutral-700
+              text-white
+              placeholder-gray-400
+              rounded-lg
+              px-4
+              py-3
+              outline-none
+              focus:ring-2
+              focus:ring-purple-500
+              no-spinner
+            "
+          />
+
+          <button
+            onClick={fazTudo}
+            disabled={!paginasValidas}
+            className={`
+              font-semibold
+              py-3
+              rounded-lg
+              transition
+              ${paginasValidas
+                ? "bg-purple-500 hover:bg-purple-400 text-white"
+                : "bg-neutral-600 text-gray-400 cursor-not-allowed"
+              }
+            `}
+          >
+            Salvar ✅
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+);
 }
 
 export default App;
