@@ -10,7 +10,6 @@ function App() {
   const [diaAtual, setDiaAtual] = useState("2026-01-23")
   const [carregado, setCarregado] = useState(false);
 
-
   const paginasLidas = historico.map(item => item.paginas)
   const totalPaginas = paginasLidas.reduce((acc, num) => acc + num, 0)
   const mediaPaginas = totalPaginas / paginasLidas.length
@@ -20,8 +19,8 @@ function App() {
     paginas !== "" &&
     /^\d+$/.test(paginas) &&
     parseInt(paginas, 10) > 0
-  
-    // carregar
+
+  // carregar
   useEffect(() => {
     const salvo = localStorage.getItem("leitura-diaria");
     const hoje = new Date().toISOString().slice(0, 10);
@@ -43,9 +42,8 @@ function App() {
 
     setCarregado(true);
   }, []);
-   
 
-  //salvar
+  // salvar
   useEffect(() => {
     if (!carregado) return;
 
@@ -97,99 +95,116 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-900">
-      <div className="mx-auto max-w-lg px-4 py-8">
-        <div className="flex flex-col items-center text-center gap-6">
+    <div className="
+      bg-neutral-900
+      w-full
+      min-h-[100dvh]
+      flex
+      flex-col
+      items-center
+      px-4
+      pt-8
+      pb-12
+      md:justify-center
+      md:min-h-screen
+    ">
 
-          {/* Título */}
-          <h1 className="text-gray-100 text-xl font-medium">
-            Leitura Diária
-          </h1>
+      <div className="flex flex-col items-center text-center gap-6 w-full md:max-w-md">
 
-          {/* Streak */}
-          <div className="flex flex-col items-center gap-1">
-            <span className="text-3xl">🔥</span>
-            <span className="text-7xl font-bold text-white">
-              {streak}
-            </span>
-            <span className="text-gray-400 text-sm">
-              dias seguidos
-            </span>
-          </div>
+        {/* Título */}
+        <h1 className="text-gray-100 text-xl font-medium">
+          Leitura Diária
+        </h1>
 
-          {/* Mensagem */}
-          <p className="text-gray-300 max-w-xs">
-            {streak === 0
-              ? "Comece sua sequência hoje "
-              : "Leitura marcada! Volte amanhã "}
-          </p>
+        {/* Streak */}
+        <div className="flex flex-col items-center gap-1">
+          <span className="text-3xl">🔥</span>
+          <span className="text-7xl font-bold text-white">
+            {streak}
+          </span>
+          <span className="text-gray-400 text-sm">
+            dias seguidos
+          </span>
+        </div>
 
-          {/* Botão principal */}
-          {!clicou && (
-            <button
-              onClick={abrirModal}
-              className="
-                mt-4
-                bg-purple-500
-                hover:bg-purple-400
-                text-white
-                font-semibold
-                px-8
-                py-3
-                rounded-full
-                transition
-              "
-            >
-              Li hoje
-            </button>
-          )}
+        {/* Mensagem */}
+        <p className="text-gray-300 max-w-xs">
+          {streak === 0
+            ? "Comece sua sequência hoje"
+            : "Leitura marcada! Volte amanhã"}
+        </p>
 
-          {/* Estatísticas */}
-          <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4 w-full">
-
-            {/* Card 1 */}
-            <div className="bg-neutral-800 rounded-xl p-4 flex flex-col items-center gap-1">
-              <span className="text-xl">📖</span>
-              <span className="text-2xl font-bold text-white">
-                {totalPaginas}
-              </span>
-              <span className="text-xs text-gray-400">
-                Total
-              </span>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-neutral-800 rounded-xl p-4 flex flex-col items-center gap-1">
-              <span className="text-xl">📊</span>
-              <span className="text-2xl font-bold text-white">
-                {!Number.isNaN(mediaPaginas) ? mediaPaginas : "-"}
-              </span>
-              <span className="text-xs text-gray-400">
-                Média
-              </span>
-            </div>
-
-            {/* Card 3 */}
-            <div className="bg-neutral-800 rounded-xl p-4 flex flex-col items-center gap-1">
-              <span className="text-xl">⭐</span>
-              <span className="text-2xl font-bold text-white">
-                {historico.length === 0 ? "-" : maiorPaginas}
-              </span>
-              <span className="text-xs text-gray-400">
-                Melhor dia
-              </span>
-            </div>
-
-          </div>
-
+        {/* Botão principal */}
+        {!clicou && (
           <button
-            onClick={avancarDia}
-            className="text-xs text-gray-400 underline mt-4"
+            onClick={abrirModal}
+            className="
+              mt-4
+              bg-purple-500
+              hover:bg-purple-400
+              text-white
+              font-semibold
+              px-8
+              py-3
+              rounded-full
+              transition
+            "
           >
-            ⏭️ Avançar dia (teste)
+            Li hoje
           </button>
+        )}
+
+        {/* Estatísticas */}
+        <div className="
+          mt-8
+          grid
+          grid-cols-3
+          gap-4
+          w-full
+        ">
+
+          {/* Card 1 */}
+          <div className="bg-neutral-800 rounded-xl p-4 flex flex-col items-center gap-1">
+            <span className="text-xl">📖</span>
+            <span className="text-2xl font-bold text-white">
+              {totalPaginas}
+            </span>
+            <span className="text-xs text-gray-400">
+              Total
+            </span>
+          </div>
+
+          {/* Card 2 */}
+          <div className="bg-neutral-800 rounded-xl p-4 flex flex-col items-center gap-1">
+            <span className="text-xl">📊</span>
+            <span className="text-2xl font-bold text-white">
+              {!Number.isNaN(mediaPaginas) ? mediaPaginas : "-"}
+            </span>
+            <span className="text-xs text-gray-400">
+              Média
+            </span>
+          </div>
+
+          {/* Card 3 */}
+          <div className="bg-neutral-800 rounded-xl p-4 flex flex-col items-center gap-1">
+            <span className="text-xl">⭐</span>
+            <span className="text-2xl font-bold text-white">
+              {historico.length === 0 ? "-" : maiorPaginas}
+            </span>
+            <span className="text-xs text-gray-400">
+              Melhor dia
+            </span>
+          </div>
 
         </div>
+
+        <button
+          onClick={avancarDia}
+          className="text-xs text-gray-400 underline mt-4"
+        >
+          ⏭️ Avançar dia (teste)
+        </button>
+
       </div>
 
       {/* MODAL */}
@@ -218,8 +233,8 @@ function App() {
                 py-2
                 outline-none
                 focus:ring-2
-                focus:ring-purple-500 
-                no-spinner border rounded p-2              
+                focus:ring-purple-500
+                no-spinner
               "
             />
 
